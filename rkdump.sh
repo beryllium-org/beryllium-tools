@@ -7,13 +7,16 @@
 # Bill Sideris <bill88t@bredos.org>
 
 show_help() {
-    echo "Usage: $0 [--first N|-f N] <filename>"
+    echo "Usage: $0 [--first N|-f N] [--spi|-s|--emmc|-e|--sd|-d] <filename>"
     echo ""
     echo "Description:"
     echo "  Dumps data from a device connected via rkdeveloptool to a specified file."
     echo ""
     echo "Arguments:"
     echo "  --first N, -f N   Optional. Limit dump to the first N megabytes."
+    echo "  --spi, -s         Select SPI flash storage."
+    echo "  --emmc, -e        Select eMMC storage."
+    echo "  --sd, -d          Select SD card storage."
     echo "  <filename>        The name of the output file where the dump will be saved."
     echo ""
     echo "Example:"
@@ -27,6 +30,7 @@ show_help() {
 # Parse args
 size_mb=""
 filename=""
+storage_id=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -42,6 +46,15 @@ while [[ $# -gt 0 ]]; do
                 echo "Error: --first/-f requires a positive integer argument."
                 exit 1
             fi
+            ;;
+        --spi|-s)
+            storage_id=9
+            ;;
+        --emmc|-e)
+            storage_id=1
+            ;;
+        --sd|-d)
+            storage_id=2
             ;;
         -*)
             echo "Error: Unknown option '$1'"
@@ -70,6 +83,15 @@ if ! command -v rkdeveloptool &>/dev/null; then
     echo "Error: rkdeveloptool is not installed or not in your PATH."
     echo "Please install rkdeveloptool and try again."
     exit 1
+fi
+
+# Change storage if requested
+if [[ -n "$storage_id" ]]; then
+    echo "Switching storage to ID $storage_id..."
+    if ! sudo rkdeveloptool cs "$storage_id"; then
+        echo "Error: Failed to switch storage."
+        exit 1
+    fi
 fi
 
 # Get flash info
