@@ -112,6 +112,9 @@ def get_mmc_devices():
     base_path = "/sys/class/mmc_host"
     devices = []
 
+    if not os.path.exists(base_path):
+        return devices
+
     for host in os.listdir(base_path):
         if not re.match(r"mmc\d+", host):
             continue
