@@ -1,6 +1,6 @@
-# Maintainer: Bill Sideris <bill88t@bredos.org>
+# Maintainer: Bill Sideris <bill88t@feline.gr>
 
-pkgname=bredos-tools
+pkgname=beryllium-tools
 pkgver=1.13.0
 pkgrel=1
 pkgdesc="A grand collection of tools"
@@ -11,6 +11,10 @@ license=('GPL3')
 
 groups=(bredos)
 depends=('python' 'arch-install-scripts' 'systemd' 'gcc')
+provides=('bredos-tools')
+replaces=('bredos-tools')
+conflicts=('bredos-tools')
+
 optdepends=(
     'dtc: Compile device trees with the dtsc helper'
     'android-tools: Use the rv2rk script for flashing Ky RISC-V chips'
@@ -18,7 +22,7 @@ optdepends=(
 
 source=('dtsc.py'
         'rkdump.sh'
-        'bredos-chroot.sh'
+        'beryllium-chroot.sh'
         'lsmmc.py'
         'wakeupctl.py'
         'grub-password.sh'
@@ -36,11 +40,11 @@ source=('dtsc.py'
         'sleepctl.1'
         'sleepctld.1'
         'wakeupctl.1'
-        'bredos-chroot.8')
+        'beryllium-chroot.8')
 sha256sums=('f264899c639e3e8897e2daaef00a035a85ab51e39ba9ae5bb32d31e41d5394eb'
-            'b3a3fd7115f63180d466b05739b092912c8b62420e514f39cb36b2b345c11585'
+            '0105d6b791bdc4289c2cd3227fd4a836182a8f14261751a70b636606054452ae'
             '3f8adbb46b4d0345ad558393ab66b4fa50d33c5761b742a513cf7aff803a94ee'
-            '7fa338e127e816acf5fb6c04e47c8a6098a606929b3e068853281a00d85005e2'
+            '5b8dd87f4141cdce1aa73eb19fca30370c4ab5fc1f97f8077cd01bf68a51a4cc'
             '12047c25a46a9e0def5cc687ed0d1690d8e80853680280d347b1102b5203bde3'
             'be81b089e5bb91a9a3c2ae6c6658d538ea2b031263e3ac9685be2c1ec87fba6f'
             'f430e73417126b2dcf84cfaa02b3fb5c520da5794faf8d29f9c8531ec970614e'
@@ -70,7 +74,8 @@ package() {
     install -Dm755 "$srcdir/wakeupctl.py" "$pkgdir/usr/bin/wakeupctl"
 
     # BredOS-Chroot
-    install -Dm755 "$srcdir/bredos-chroot.sh" "$pkgdir/usr/bin/bredos-chroot"
+    install -Dm755 "$srcdir/beryllium-chroot.sh" "$pkgdir/usr/bin/beryllium-chroot"
+    ln -s "/usr/bin/beryllium-chroot" "$pkgdir/usr/bin/beryl-chroot"
 
     # lsmmc
     install -Dm755 "$srcdir/lsmmc.py" "$pkgdir/usr/bin/lsmmc"
@@ -98,5 +103,5 @@ package() {
     install -Dm644 "$srcdir/sleepctl.1" "$pkgdir/usr/share/man/man1/sleepctl.1"
     install -Dm644 "$srcdir/sleepctld.1" "$pkgdir/usr/share/man/man1/sleepctld.1"
     install -Dm644 "$srcdir/wakeupctl.1" "$pkgdir/usr/share/man/man1/wakeupctl.1"
-    install -Dm644 "$srcdir/bredos-chroot.8" "$pkgdir/usr/share/man/man8/bredos-chroot.8"
+    install -Dm644 "$srcdir/beryllium-chroot.8" "$pkgdir/usr/share/man/man8/beryllium-chroot.8"
 }
