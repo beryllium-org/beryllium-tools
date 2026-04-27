@@ -122,6 +122,10 @@ def main():
 
     print("Flashing completed successfully.")
 
+    print("\nRebooting device..")
+    sleep(0.5)
+    run_required([FASTBOOT_BIN, "reboot"])
+
 
 if __name__ == "__main__":
     main()
