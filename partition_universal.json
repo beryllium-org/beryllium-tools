@@ -1,0 +1,25 @@
+{
+    "version": "1.0",
+    "format": "gpt",
+    "partitions": [
+        {
+            "name": "bootinfo",
+            "offset": "0K",
+            "size": "-",
+            "image": "factory/bootinfo_sd.bin",
+            "holes": "{\"(80;512)\"}"
+        },
+        {
+            "name": "fsbl",
+            "offset": "0K",
+            "size": "-",
+            "image": "factory/FSBL.bin"
+        },
+	{
+            "name": "emmc",
+            "offset": "0",
+            "size": "-",
+            "image": "openwrt-ky-riscv64-x1_orangepi-rv2-ext4-sysupgrade.img"
+        }
+    ]
+}

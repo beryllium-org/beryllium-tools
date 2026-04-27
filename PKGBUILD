@@ -1,7 +1,7 @@
 # Maintainer: Bill Sideris <bill88t@feline.gr>
 
 pkgname=beryllium-tools
-pkgver=1.13.0
+pkgver=1.14.0
 pkgrel=1
 pkgdesc="A grand collection of tools"
 
@@ -17,7 +17,7 @@ conflicts=('bredos-tools')
 
 optdepends=(
     'dtc: Compile device trees with the dtsc helper'
-    'android-tools: Use the rv2rk script for flashing Ky RISC-V chips'
+    'android-tools: Use rv2rk and rvflasher scripts for flashing Ky RISC-V chips'
 )
 
 source=('dtsc.py'
@@ -34,6 +34,11 @@ source=('dtsc.py'
         'rv2rk.py'
         'FSBL.bin'
         'u-boot.itb'
+        'rvflasher.py'
+        'FSBL_FLASH.bin'
+        'u-boot_FLASH.itb'
+        'partition_universal.json'
+        'bootinfo_sd.bin'
         'rkdump.1'
         'grub-password.1'
         'dtsc.1'
@@ -55,6 +60,11 @@ sha256sums=('f264899c639e3e8897e2daaef00a035a85ab51e39ba9ae5bb32d31e41d5394eb'
             'adbcefef20db5743a34b75f463c73aefcfb86b16badc33f0edb30b947cb7ac0e'
             '93a0b2e1b8181818ade215f00937db2decea79639147dcad2eb9faa8d669f4e4'
             'fb163aa1ba382e2a6009c8e1b468494b5ab11aa80c500012590226f1fb554040'
+            '8342ff36a1caf3062424bb362a0bee89ab72be90729a2c2690ff62509ac94209'
+            'b4113d322513cdc13a487233b77cc5a7d487e551f8db4496056a3c1dd41659f5'
+            '9484899dc57aacacae666a7b66416fe4d424372bb6a9540677cd596a21edc1fe'
+            '5ee0f6f807e3b83f6a43826c9130b001232ab8d42eb664e4087daeca3853ac98'
+            'f339e3e576ce94d7812c2887622c5882ae12ac3c9a98059aef37741850a43cb6'
             'ccaab9ca8f25571d5809b82f7be9a7133d91a75c745ff7174d5c78c593510659'
             '99646c23b88b74fa6fa9220588cb7cc18b1782fa8642559ce237adfc8b98ef01'
             '9a3d90776fb514bbcbfdb8cef0034555c093906eeac6509d3faa460fe04d7371'
@@ -95,6 +105,14 @@ package() {
     mkdir "$pkgdir/usr/share/rv2rk"
     install -Dm644 "$srcdir/FSBL.bin" "$pkgdir/usr/share/rv2rk/FSBL.bin"
     install -Dm644 "$srcdir/u-boot.itb" "$pkgdir/usr/share/rv2rk/u-boot.itb"
+
+    # rvflasher
+    install -Dm755 "$srcdir/rvflasher.py" "$pkgdir/usr/bin/rvflasher"
+    mkdir "$pkgdir/usr/share/rvflasher"
+    install -Dm644 "$srcdir/FSBL_FLASH.bin" "$pkgdir/usr/share/rvflasher/FSBL.bin"
+    install -Dm644 "$srcdir/u-boot_FLASH.itb" "$pkgdir/usr/share/rvflasher/u-boot.itb"
+    install -Dm644 "$srcdir/partition_universal.json" "$pkgdir/usr/share/rvflasher/partition_universal.json"
+    install -Dm644 "$srcdir/bootinfo_sd.bin" "$pkgdir/usr/share/rvflasher/bootinfo_sd.bin"
 
     # Manual pages
     install -Dm644 "$srcdir/rkdump.1" "$pkgdir/usr/share/man/man1/rkdump.1"
