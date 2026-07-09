@@ -3,7 +3,7 @@
 # Rockchip flash dumper script.
 # Requires the device to be in maskrom (with a loaded spl) or in recovery mode.
 #
-# This script is part of BredOS-Tools, licenced under the GPL-3.0 licence.
+# This script is part of Beryllium-Tools, a fork of BredOS-Tools, licenced under the GPL-3.0 licence.
 # Bill Sideris <bill88t@bredos.org>
 
 show_help() {

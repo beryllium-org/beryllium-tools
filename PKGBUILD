@@ -1,15 +1,15 @@
 # Maintainer: Bill Sideris <bill88t@feline.gr>
 
 pkgname=beryllium-tools
-pkgver=1.14.0
+pkgver=1.14.2
 pkgrel=1
 pkgdesc="A grand collection of tools"
 
 arch=('any')
-url="https://github.com/BredOS/bredos-tools"
+url="https://github.com/beryllium-org/beryllium-tools"
 license=('GPL3')
 
-groups=(bredos)
+groups=(beryllium)
 depends=('python' 'arch-install-scripts' 'systemd' 'gcc')
 provides=('bredos-tools')
 replaces=('bredos-tools')
@@ -46,8 +46,8 @@ source=('dtsc.py'
         'sleepctld.1'
         'wakeupctl.1'
         'beryllium-chroot.8')
-sha256sums=('f264899c639e3e8897e2daaef00a035a85ab51e39ba9ae5bb32d31e41d5394eb'
-            '0105d6b791bdc4289c2cd3227fd4a836182a8f14261751a70b636606054452ae'
+sha256sums=('b56ef504614e3ab02fbaf1211196953b783ab1ca6b5855a265f8e9417891628e'
+            'e7404e6dc96d40d0619daa25287f0e438e9a99484a8b7fa4f8d2adcf078932c1'
             '3f8adbb46b4d0345ad558393ab66b4fa50d33c5761b742a513cf7aff803a94ee'
             '5b8dd87f4141cdce1aa73eb19fca30370c4ab5fc1f97f8077cd01bf68a51a4cc'
             '12047c25a46a9e0def5cc687ed0d1690d8e80853680280d347b1102b5203bde3'
@@ -60,18 +60,18 @@ sha256sums=('f264899c639e3e8897e2daaef00a035a85ab51e39ba9ae5bb32d31e41d5394eb'
             'adbcefef20db5743a34b75f463c73aefcfb86b16badc33f0edb30b947cb7ac0e'
             '93a0b2e1b8181818ade215f00937db2decea79639147dcad2eb9faa8d669f4e4'
             'fb163aa1ba382e2a6009c8e1b468494b5ab11aa80c500012590226f1fb554040'
-            '1db9788e799eb2711b833e3769191f5682212d853ceb02805f37ba648a266609'
+            '0d4ac2390db55ffd34be0222ab8de693620cd479149ba787ac13eb0125ffb5f2'
             'b4113d322513cdc13a487233b77cc5a7d487e551f8db4496056a3c1dd41659f5'
             '9484899dc57aacacae666a7b66416fe4d424372bb6a9540677cd596a21edc1fe'
             '5ee0f6f807e3b83f6a43826c9130b001232ab8d42eb664e4087daeca3853ac98'
             'f339e3e576ce94d7812c2887622c5882ae12ac3c9a98059aef37741850a43cb6'
-            'ccaab9ca8f25571d5809b82f7be9a7133d91a75c745ff7174d5c78c593510659'
-            '99646c23b88b74fa6fa9220588cb7cc18b1782fa8642559ce237adfc8b98ef01'
-            '9a3d90776fb514bbcbfdb8cef0034555c093906eeac6509d3faa460fe04d7371'
-            'b0543503053367280b216f534941b39460a04461a5d19834ab679677275761c6'
+            '670031115992cc59dcd9b9890847cf6a1705fd430518115aebe4514a02241a6e'
+            '4d0113cf8b7a32eb38e8d6f51744fa8c8627539be01428a11573f9eaab127ba6'
+            'e46155245bfa5734dbce9e4a272cc60a4b98f3fc4fd53dd3109104432881809e'
+            '21d1e3c6c7df073e9b2696e00c4558becf0b1f9945ca00ad8e64302899d1fc9b'
             'bb1ff999bca9352af32caca4e92cfd5516954957dd9d4397b3f4bbcde26f8302'
-            '13b871e82b556190e0f221caeb5b719b48355e908eacba1ab6ea863fb5e658e4'
-            'ef25ee68d18f85fb9a9b8a1976fcdd55828fdc968a94cdeea78490c44680f6f6')
+            '56c7808d7b1d734474badada16af4432dc4b48d8db06918607b5bee47a25405c'
+            '5c59bb724fab032656ebb69cf638abb2f40fcdbe9f6d01b5e3842fe2325989aa')
 
 package() {
     # DTSC
@@ -83,7 +83,7 @@ package() {
     # Wakeupctl
     install -Dm755 "$srcdir/wakeupctl.py" "$pkgdir/usr/bin/wakeupctl"
 
-    # BredOS-Chroot
+    # beryl-Chroot
     install -Dm755 "$srcdir/beryllium-chroot.sh" "$pkgdir/usr/bin/beryllium-chroot"
     ln -s "/usr/bin/beryllium-chroot" "$pkgdir/usr/bin/beryl-chroot"
 

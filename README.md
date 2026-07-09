@@ -1,2 +1,2 @@
-# bredos-tools
-Scripts used for development of BredOS.
+# Beryllium-tools
+Scripts used for development of Beryllium OS.

@@ -1,19 +1,19 @@
-.TH BREDOS-CHROOT 1 "May 2025" "BredOS Tools" "BredOS System Administration"
+.TH BERYLLIUM-CHROOT 1 "Jul 2026" "Beryllium Tools" "Beryllium System Administration"
 .SH NAME
-bredos-chroot \- chroot into a BredOS installation
+beryl-chroot \- chroot into a Beryllium OS installation
 .SH SYNOPSIS
-.B bredos-chroot
+.B beryl-chroot
 \fIBTRFS_PARTITION\fR \fIBOOT_PARTITION\fR
 .SH DESCRIPTION
-.B bredos-chroot
-is a utility that simplifies chrooting into a BredOS installation by
+.B beryl-chroot
+is a utility that simplifies chrooting into a Beryllium OS installation by
 automatically mounting the Btrfs subvolumes and boot partition. It is
 primarily used for system repairs, updates, or maintenance of an existing
-BredOS installation from a live environment.
+Beryllium OS installation from a live environment.
 .SH ARGUMENTS
 .TP
 .BR BTRFS_PARTITION
-The Btrfs partition containing the BredOS system (e.g., /dev/sda3)
+The Btrfs partition containing the Beryllium OS system (e.g., /dev/sda3)
 .TP
 .BR BOOT_PARTITION
 The boot partition containing the EFI files (e.g., /dev/sda2)
@@ -21,7 +21,7 @@ The boot partition containing the EFI files (e.g., /dev/sda2)
 The tool performs the following operations:
 .PP
 .RS 4
-1. Mounts the specified Btrfs partition with standard BredOS subvolumes (@, @home, @log, @pkg)
+1. Mounts the specified Btrfs partition with standard Beryllium OS subvolumes (@, @home, @log, @pkg)
 .br
 2. Mounts the boot partition
 .br
@@ -31,11 +31,11 @@ The tool performs the following operations:
 .RE
 .SH EXAMPLES
 .PP
-.B bredos-chroot /dev/sdb3 /dev/sdb2
+.B beryl-chroot /dev/sdb3 /dev/sdb2
 .SH SEE ALSO
 .BR arch-chroot (8),
 .BR mount (8)
 .SH BUGS
-Report bugs to the BredOS tools issue tracker at https://github.com/BredOS/bredos-tools/issues
+Report bugs to the Beryllium tools issue tracker at https://github.com/beryllium-org/beryllium-tools/issues
 .SH AUTHOR
 Bill88t <bill88t@feline.gr>
