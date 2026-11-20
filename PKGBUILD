@@ -1,7 +1,7 @@
 # Maintainer: Bill Sideris <bill88t@feline.gr>
 
 pkgname=beryllium-tools
-pkgver=1.14.2
+pkgver=1.15.0
 pkgrel=1
 pkgdesc="A grand collection of tools"
 
@@ -18,6 +18,10 @@ conflicts=('bredos-tools')
 optdepends=(
     'dtc: Compile device trees with the dtsc helper'
     'android-tools: Use rv2rk and rvflasher scripts for flashing Ky RISC-V chips'
+    'cryptsetup: Convert and manage the LUKS2 container with beryllium-fde'
+    'grub: Install and regenerate GRUB for beryllium-fde'
+    'dracut: Rebuild initramfs images with beryllium-fde'
+    'btrfs-progs: Resize the root filesystem during beryllium-fde conversion'
 )
 
 source=('dtsc.py'
@@ -45,7 +49,9 @@ source=('dtsc.py'
         'sleepctl.1'
         'sleepctld.1'
         'wakeupctl.1'
-        'beryllium-chroot.8')
+        'beryllium-chroot.8'
+        'beryllium-fde.py'
+        'beryllium-fde.8')
 sha256sums=('b56ef504614e3ab02fbaf1211196953b783ab1ca6b5855a265f8e9417891628e'
             'e7404e6dc96d40d0619daa25287f0e438e9a99484a8b7fa4f8d2adcf078932c1'
             '3f8adbb46b4d0345ad558393ab66b4fa50d33c5761b742a513cf7aff803a94ee'
@@ -114,6 +120,9 @@ package() {
     install -Dm644 "$srcdir/partition_universal.json" "$pkgdir/usr/share/rvflasher/partition_universal.json"
     install -Dm644 "$srcdir/bootinfo_sd.bin" "$pkgdir/usr/share/rvflasher/bootinfo_sd.bin"
 
+    # beryllium-fde
+    install -Dm755 "$srcdir/beryllium-fde.py" "$pkgdir/usr/bin/beryllium-fde"
+
     # Manual pages
     install -Dm644 "$srcdir/rkdump.1" "$pkgdir/usr/share/man/man1/rkdump.1"
     install -Dm644 "$srcdir/grub-password.1" "$pkgdir/usr/share/man/man1/grub-password.1"
@@ -122,4 +131,5 @@ package() {
     install -Dm644 "$srcdir/sleepctld.1" "$pkgdir/usr/share/man/man1/sleepctld.1"
     install -Dm644 "$srcdir/wakeupctl.1" "$pkgdir/usr/share/man/man1/wakeupctl.1"
     install -Dm644 "$srcdir/beryllium-chroot.8" "$pkgdir/usr/share/man/man8/beryllium-chroot.8"
+    install -Dm644 "$srcdir/beryllium-fde.8" "$pkgdir/usr/share/man/man8/beryllium-fde.8"
 }

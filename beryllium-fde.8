@@ -1,0 +1,70 @@
+.TH BERYLLIUM-FDE 8 "2026-11-16" "beryllium-tools" "System Administration"
+.SH NAME
+beryllium-fde \- full disk encryption for Beryllium OS
+.SH SYNOPSIS
+.B beryllium-fde prepare
+.RB [ \-\-i\-have\-a\-backup ]
+.br
+.B beryllium-fde live
+.br
+.B beryllium-fde
+.RI [ mode ]
+.SH DESCRIPTION
+Automates the endorsed Beryllium OS full disk encryption layout: an ESP
+holding only the GRUB EFI binary, with everything else (grub.cfg, kernel,
+initramfs, root btrfs, swap) inside a LUKS2 container. Two keyslots are
+used: slot 0 holds the user passphrase with PBKDF2 so GRUB can unlock it,
+slot 1 holds a 64-byte keyfile (argon2id) that is embedded into the
+encrypted initramfs so the system decrypts itself silently. The only
+passphrase prompt is the one at GRUB.
+.PP
+At every prompt, Ctrl+C and Ctrl+D both count as an abort: the tool
+exits without answering the prompt (resumable where progress already
+allows it). Running the tool without an argument prints the help menu.
+.PP
+The conversion is done in place from a live ISO with
+.B cryptsetup reencrypt \-\-encrypt \-\-pbkdf pbkdf2
+and is resumable: an interrupted run detects the state and continues.
+A full disk backup is mandatory before running this tool.
+.SH COMMANDS
+.TP
+.B prepare
+Run on the installed (unencrypted) system. Verifies the layout is the
+endorsed one (UEFI, GRUB, plain btrfs root, vfat ESP, shrink headroom,
+required packages), asks for a backup acknowledgement, and writes the
+handoff file
+.IR /var/lib/beryllium-fde/handoff.json .
+Read-only apart from that file.
+.TP
+.B live
+Run from the live ISO. Lists candidate disks and asks which one to
+encrypt, verifies it is FAT + btrfs, mounts the btrfs and reads the
+handoff file left by
+.BR prepare ,
+checks the live environment has every required command, then converts:
+shrink the btrfs tail, reencrypt, grow back, generate the keyfile and
+install it inside the encrypted root, print the keyfile path (the live
+one and the one inside the target system) and wait for Enter while any
+external backup of it remains your own responsibility -- the tool never
+scans for or copies to external media -- then enroll it as slot 1,
+update
+.IR /etc/default/grub ,
+check
+.IR /etc/dracut.conf.d/ ,
+regenerate the initramfs and GRUB via chroot, prune the ESP to the single
+EFI binary, and run a verification gate.
+.SH FILES
+.TP
+.I /var/lib/beryllium-fde/handoff.json
+Handoff state between phases; also tracks conversion progress.
+.TP
+.I /etc/cryptsetup-keys.d/cryptroot.key
+The generated keyfile (0600).
+.TP
+.I /etc/dracut.conf.d/00-crypto.conf
+Ensures the crypt/btrfs dracut modules and the keyfile are in the
+initramfs.
+.SH SEE ALSO
+.BR cryptsetup (8),
+.BR grub-install (1),
+.BR dracut (8)
